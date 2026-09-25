@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HYROX 女子双人训练 · 备赛看板</title>
 <style>
-  :root { --bg:#0e1116; --card:#181d26; --accent:#ffd028; --accent2:#ff9d2e; --text:#eef1f6; --muted:#9aa3b2; }
+  :root { --bg:#0e1116; --card:#181d26; --accent:#ffd028; --green:#3ddc84; --dim:#2a3140; --text:#eef1f6; --muted:#9aa3b2; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { background:var(--bg); color:var(--text); font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; padding:20px 16px 60px; max-width:880px; margin:0 auto; }
   h1 { font-size:26px; margin-bottom:4px; }
@@ -20,35 +20,45 @@
   .cd-box b { display:block; font-size:30px; color:var(--accent); }
   .cd-box span { font-size:12px; color:var(--muted); }
   h2 { font-size:18px; margin:26px 0 12px; }
-  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  @media (max-width:560px){ .grid{ grid-template-columns:1fr; } }
-  .card { background:var(--card); border-radius:14px; padding:14px 16px; }
-  .card .station { font-size:12px; color:var(--muted); }
-  .card .name { font-size:16px; font-weight:700; margin:2px 0 6px; }
-  .card .target { font-size:13px; color:var(--accent); margin-bottom:8px; }
-  .bar { height:8px; background:#2a3140; border-radius:6px; overflow:hidden; }
-  .bar i { display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:6px; }
-  .card .lvl { font-size:12px; color:var(--muted); margin-top:6px; }
-  .card .split { font-size:12px; color:var(--muted); margin-top:4px; }
-  .card .split b { color:var(--text); }
-  table { width:100%; border-collapse:collapse; font-size:13px; background:var(--card); border-radius:14px; overflow:hidden; }
-  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #242b38; vertical-align:top; }
-  th { color:var(--muted); font-weight:600; font-size:12px; }
-  tr:last-child td { border-bottom:none; }
-  .note { margin-top:14px; font-size:13px; color:var(--muted); }
+  h2 .pct { font-size:13px; color:var(--muted); font-weight:400; }
+  .grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  @media (max-width:640px){ .grid{ grid-template-columns:repeat(2,1fr); } }
+  .st { border-radius:14px; padding:14px 12px; text-align:center; }
+  .st.done { background:#14251c; border:1px solid #1f4d33; }
+  .st.todo { background:var(--card); border:1px dashed #3a4356; opacity:.75; }
+  .st .mark { font-size:22px; }
+  .st .name { font-size:14px; font-weight:700; margin:6px 0 4px; }
+  .st .when { font-size:12px; color:var(--muted); }
+  .st.done .when { color:var(--green); }
+  .session { background:var(--card); border-radius:14px; padding:16px; margin-bottom:12px; }
+  .session .date { font-size:15px; font-weight:700; }
+  .session .date span { font-size:12px; color:var(--muted); font-weight:400; margin-left:8px; }
+  .chips { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+  .chip { background:#242b38; border-radius:20px; padding:5px 12px; font-size:13px; }
+  .chip.new { background:#1f4d33; color:var(--green); }
+  .session .remark { font-size:13px; color:var(--muted); }
+  details.scores { margin-top:10px; font-size:13px; color:var(--muted); }
+  details.scores summary { cursor:pointer; font-size:13px; }
+  details.scores table { width:100%; border-collapse:collapse; margin-top:8px; font-size:13px; }
+  details.scores td { padding:6px 8px; border-bottom:1px solid #242b38; }
+  details.ref { margin-top:22px; font-size:13px; color:var(--muted); }
+  details.ref summary { cursor:pointer; font-size:14px; color:var(--text); font-weight:600; }
+  details.ref table { width:100%; border-collapse:collapse; margin-top:8px; font-size:13px; }
+  details.ref td, details.ref th { padding:8px 10px; border-bottom:1px solid #242b38; text-align:left; }
+  details.ref th { color:var(--muted); font-size:12px; }
   .foot { margin-top:30px; color:var(--muted); font-size:12px; text-align:center; }
 </style>
 </head>
 <body>
   <h1>🏋️ HYROX 女子双人训练</h1>
-  <p class="sub">数据来自 Notion · 每周合练后更新</p>
+  <p class="sub">先看覆盖，再看成绩 · 数据来自 Notion 训练记录</p>
 
   <div class="info">
     <div class="item"><div class="k">📅 日期</div><div class="v">12 月 4 日（周五）</div></div>
     <div class="item"><div class="k">📍 地点</div><div class="v">洛杉矶</div></div>
     <div class="item"><div class="k">👯 组别</div><div class="v">女子双人</div></div>
     <div class="item"><div class="k">🤝 搭档</div><div class="v">Ivy Ling</div></div>
-    <div class="item"><div class="k">🏋️ 训练节奏</div><div class="v">每周一次 @ Bay Club Santa Clara</div></div>
+    <div class="item"><div class="k">🏋️ 节奏</div><div class="v">每周一次 @ Bay Club</div></div>
   </div>
 
   <div class="countdown">
@@ -58,40 +68,59 @@
     <div class="cd-box"><b id="s">--</b><span>秒</span></div>
   </div>
 
-  <h2>📊 8 个站点 · 比赛目标 vs 当前进度</h2>
-  <div class="grid" id="stations"></div>
-  <p class="note">每个站点之间穿插 1km 跑，全程共 8km 跑 + 8 个站点。</p>
+  <h2>✅ 训练覆盖 <span class="pct">5 / 8 个站点已练</span></h2>
+  <div class="grid" id="coverage"></div>
 
-  <h2>📝 训练记录</h2>
-  <table>
-    <tr><th>日期</th><th>本周重点</th><th>成绩 / 用时</th><th>备注</th></tr>
-    <tr>
-      <td>2026-09-15<br>合练</td>
-      <td>SkiErg、Farmers Carry、Burpee Broad Jump、Rowing、Wall Balls</td>
-      <td>SkiErg 500m；农夫行走 30m（我 20 lb / Ivy 50 lb）；波比跳 30m；药球：我 20 个 / Ivy 50 个；划船：我 200m / Ivy 500m</td>
-      <td>覆盖 5 个站点</td>
-    </tr>
-  </table>
+  <h2>📝 训练记录 <span class="pct">按合练日期倒序</span></h2>
+  <div id="sessions"></div>
+
+  <details class="ref">
+    <summary>📋 比赛 8 站点官方重量（女子双人 · 参考）</summary>
+    <table>
+      <tr><th>顺序</th><th>站点</th><th>内容</th><th>重量</th></tr>
+      <tr><td>1</td><td>SkiErg</td><td>1000m</td><td>—</td></tr>
+      <tr><td>2</td><td>Sled Push</td><td>50m</td><td>225 lb（含雪橇）</td></tr>
+      <tr><td>3</td><td>Sled Pull</td><td>50m</td><td>172 lb</td></tr>
+      <tr><td>4</td><td>Burpee Broad Jump</td><td>80m</td><td>—</td></tr>
+      <tr><td>5</td><td>Rowing</td><td>1000m</td><td>—</td></tr>
+      <tr><td>6</td><td>Farmers Carry</td><td>200m</td><td>2×35 lb</td></tr>
+      <tr><td>7</td><td>Sandbag Lunges</td><td>100m</td><td>22 lb</td></tr>
+      <tr><td>8</td><td>Wall Balls</td><td>100 次</td><td>9 lb</td></tr>
+    </table>
+  </details>
 
   <p class="foot">两个 Muse / 两人共同维护 · 更新只需 push 到仓库，约 1 分钟后页面自动刷新</p>
 
 <script>
 const stations = [
-  ["第 1 站","SkiErg","1000m","500m",40,null],
-  ["第 2 站","Sled Push","50m @ 225 lb（含雪橇）","还没练",0,null],
-  ["第 3 站","Sled Pull","50m @ 172 lb","还没练",0,null],
-  ["第 4 站","Burpee Broad Jump","80m","30m",40,null],
-  ["第 5 站","Rowing","1000m","我 200m / Ivy 500m",20,["我","200m","Ivy","500m"]],
-  ["第 6 站","Farmers Carry","200m @ 2×35 lb","30m（我 20 lb / Ivy 50 lb）",20,["我","20 lb","Ivy","50 lb"]],
-  ["第 7 站","Sandbag Lunges","100m @ 22 lb","还没练",0,null],
-  ["第 8 站","Wall Balls","100 次 @ 9 lb","我 20 / Ivy 50",40,["我","20 次","Ivy","50 次"]],
+  ["SkiErg", true, "9/15 练过"],
+  ["Sled Push", false, "还没练"],
+  ["Sled Pull", false, "还没练"],
+  ["Burpee Broad Jump", true, "9/15 练过"],
+  ["Rowing", true, "9/15 练过"],
+  ["Farmers Carry", true, "9/15 练过"],
+  ["Sandbag Lunges", false, "还没练"],
+  ["Wall Balls", true, "9/15 练过"],
 ];
-document.getElementById('stations').innerHTML = stations.map(s => {
-  const split = s[5] ? `<div class="split"><b>${s[5][0]}</b> ${s[5][1]} · <b>${s[5][2]}</b> ${s[5][3]}</div>` : '';
-  return `<div class="card"><div class="station">${s[0]}</div><div class="name">${s[1]}</div>` +
-  `<div class="target">比赛目标：${s[2]}</div><div class="bar"><i style="width:${s[4]}%"></i></div>` +
-  `<div class="lvl">当前：${s[3]}</div>${split}</div>`;
-}).join('');
+document.getElementById('coverage').innerHTML = stations.map(s =>
+  `<div class="st ${s[1]?'done':'todo'}"><div class="mark">${s[1]?'✅':'⬜'}</div>` +
+  `<div class="name">${s[0]}</div><div class="when">${s[2]}</div></div>`).join('');
+
+const sessions = [
+  {
+    date: "2026-09-15", title: "合练",
+    focus: ["SkiErg","Farmers Carry","Burpee Broad Jump","Rowing","Wall Balls"],
+    remark: "覆盖 5 个站点",
+    scores: [["SkiErg","500m"],["农夫行走","30m（我 20 lb / Ivy 50 lb）"],["波比跳","30m"],["药球","我 20 个 / Ivy 50 个"],["划船","我 200m / Ivy 500m"]]
+  }
+];
+document.getElementById('sessions').innerHTML = sessions.map(x =>
+  `<div class="session"><div class="date">${x.date}<span>${x.title}</span></div>` +
+  `<div class="chips">${x.focus.map(f=>`<span class="chip">${f}</span>`).join('')}</div>` +
+  `<div class="remark">${x.remark}</div>` +
+  `<details class="scores"><summary>成绩明细（展开）</summary><table>` +
+  x.scores.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('') +
+  `</table></details></div>`).join('');
 
 const race = new Date('2026-12-04T09:00:00-08:00').getTime();
 function tick(){
