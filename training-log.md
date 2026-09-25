@@ -8,6 +8,7 @@
 - [x] 9/24 Wall Balls
 - [ ] 9/26 Farmers Carry
 - [ ] 9/28 Sled Push/Pull 组合
+- [x] 9/25 agent 推送测试 —— 这条是 Muse 直接 push 进来的 ✅
 
 ## 8 站点目标重量（女子双人官方）
 
