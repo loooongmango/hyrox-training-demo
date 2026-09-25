@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYROX 女子双人 · 备赛看板 (Demo)</title>
+<style>
+  :root { --bg:#0e1116; --card:#181d26; --accent:#ffd028; --accent2:#ff5d5d; --text:#eef1f6; --muted:#9aa3b2; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; padding:20px 16px 60px; max-width:860px; margin:0 auto; }
+  .demo-tag { display:inline-block; background:var(--accent2); color:#fff; font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; margin-bottom:10px; }
+  h1 { font-size:26px; margin-bottom:4px; }
+  .sub { color:var(--muted); font-size:14px; margin-bottom:20px; }
+  .countdown { display:flex; gap:10px; margin:18px 0 26px; }
+  .cd-box { flex:1; background:var(--card); border-radius:12px; padding:14px 6px; text-align:center; }
+  .cd-box b { display:block; font-size:30px; color:var(--accent); }
+  .cd-box span { font-size:12px; color:var(--muted); }
+  h2 { font-size:18px; margin:26px 0 12px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  @media (max-width:560px){ .grid{ grid-template-columns:1fr; } }
+  .card { background:var(--card); border-radius:14px; padding:14px 16px; }
+  .card .station { font-size:12px; color:var(--muted); }
+  .card .name { font-size:16px; font-weight:700; margin:2px 0 6px; }
+  .card .target { font-size:13px; color:var(--accent); margin-bottom:8px; }
+  .bar { height:8px; background:#2a3140; border-radius:6px; overflow:hidden; }
+  .bar i { display:block; height:100%; background:linear-gradient(90deg,var(--accent),#ff9d2e); border-radius:6px; }
+  .card .lvl { font-size:12px; color:var(--muted); margin-top:6px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; background:var(--card); border-radius:14px; overflow:hidden; }
+  th, td { padding:10px 12px; text-align:left; border-bottom:1px solid #242b38; }
+  th { color:var(--muted); font-weight:600; font-size:12px; }
+  tr:last-child td { border-bottom:none; }
+  .foot { margin-top:30px; color:var(--muted); font-size:12px; text-align:center; }
+</style>
+</head>
+<body>
+  <span class="demo-tag">DEMO · 示例数据</span>
+  <h1>HYROX 女子双人 · 备赛看板</h1>
+  <p class="sub">2026-12-04 · 洛杉矶 · 搭档：Ivy Ling</p>
+
+  <div class="countdown">
+    <div class="cd-box"><b id="d">--</b><span>天</span></div>
+    <div class="cd-box"><b id="h">--</b><span>小时</span></div>
+    <div class="cd-box"><b id="m">--</b><span>分钟</span></div>
+    <div class="cd-box"><b id="s">--</b><span>秒</span></div>
+  </div>
+
+  <h2>8 个站点 · 目标 vs 当前水平</h2>
+  <div class="grid" id="stations"></div>
+
+  <h2>本周训练记录（示例）</h2>
+  <table>
+    <tr><th>日期</th><th>内容</th><th>用时/成绩</th><th>备注</th></tr>
+    <tr><td>9/22</td><td>SkiErg + 1km 跑 × 3 组</td><td>32:10</td><td>最后一组掉速，注意呼吸节奏</td></tr>
+    <tr><td>9/24</td><td>Wall Balls 4kg × 100</td><td>6:45（分 4 组）</td><td>目标一次做完 100 个</td></tr>
+    <tr><td>9/26</td><td>Farmers Carry 2×16kg × 200m</td><td>3:58</td><td>握力是短板，加练悬垂</td></tr>
+  </table>
+
+  <p class="foot">由两位 Muse 共同维护 · 数据更新只需 push 到仓库</p>
+
+<script>
+const stations = [
+  ["第 1 站","SkiErg","1000 m","当前：1000m / 4:52",78],
+  ["第 2 站","Sled Push","102 kg × 50 m","当前：80kg × 50m",62],
+  ["第 3 站","Sled Pull","78 kg × 50 m","当前：60kg × 50m",65],
+  ["第 4 站","Burpee Broad Jumps","80 m","当前：80m / 5:40",70],
+  ["第 5 站","Rowing","1000 m","当前：1000m / 4:38",82],
+  ["第 6 站","Farmers Carry","2×16 kg × 200 m","当前：2×14kg × 200m",74],
+  ["第 7 站","Sandbag Lunges","10 kg × 100 m","当前：10kg × 60m",60],
+  ["第 8 站","Wall Balls","4 kg × 100 次","当前：100次 / 6:45",68],
+];
+document.getElementById('stations').innerHTML = stations.map(s =>
+  `<div class="card"><div class="station">${s[0]}</div><div class="name">${s[1]}</div>` +
+  `<div class="target">比赛目标：${s[2]}</div><div class="bar"><i style="width:${s[4]}%"></i></div>` +
+  `<div class="lvl">${s[3]}</div></div>`).join('');
+
+const race = new Date('2026-12-04T09:00:00-08:00').getTime();
+function tick(){
+  let t = Math.max(0, race - Date.now())/1000;
+  d.textContent = Math.floor(t/86400);
+  h.textContent = String(Math.floor(t%86400/3600)).padStart(2,'0');
+  m.textContent = String(Math.floor(t%3600/60)).padStart(2,'0');
+  s.textContent = String(Math.floor(t%60)).padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>
